@@ -46,16 +46,15 @@ After creating the new repository, I linked my local cloned project to it using 
 
 main.tf
 
-# -----------------------
-# Provider Configuration
-# -----------------------
+
+# Provider Configuration wala
 provider "aws" {
-  region = "eu-north-1"   # Stockholm
+  region = "eu-north-1"   
 }
 
-# -----------------------
-# Security group for Jenkins + Application Node
-# -----------------------
+
+# Security group for Jenkins + Application Node wala
+
 resource "aws_security_group" "vishalk_sg" {
   name        = "vishalk-sg"
   description = "Allow SSH, Jenkins, and Tomcat access"
@@ -64,21 +63,21 @@ resource "aws_security_group" "vishalk_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]   # SSH
+    cidr_blocks = ["0.0.0.0/0"]  
   }
 
   ingress {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]   # Jenkins
+    cidr_blocks = ["0.0.0.0/0"]   
   }
 
   ingress {
     from_port   = 9090
     to_port     = 9090
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]   # Tomcat
+    cidr_blocks = ["0.0.0.0/0"]   
   }
 
   egress {
@@ -89,13 +88,12 @@ resource "aws_security_group" "vishalk_sg" {
   }
 }
 
-# -----------------------
-# Jenkins Master Instance
-# -----------------------
+
+# Jenkins Master Instance wala
 resource "aws_instance" "vishalk_master" {
-  ami             = "ami-0914547665e6a707c"   # Ubuntu 22.04 LTS (Stockholm)
+  ami             = "ami-0914547665e6a707c"   
   instance_type   = "t2.micro"
-  key_name        = "vishal-key"              # 👈 replace with your key pair
+  key_name        = "vishal-key"              
   security_groups = [aws_security_group.vishalk_sg.name]
 
   tags = {
@@ -103,13 +101,12 @@ resource "aws_instance" "vishalk_master" {
   }
 }
 
-# -----------------------
-# Application Node Instance
-# -----------------------
+
+# Application Node Instance wala
 resource "aws_instance" "vishalk_node" {
-  ami             = "ami-0914547665e6a707c"   # Ubuntu 22.04 LTS (Stockholm)
+  ami             = "ami-0914547665e6a707c"  
   instance_type   = "t2.micro"
-  key_name        = "vishal-key"              # 👈 replace with your key pair
+  key_name        = "vishal-key"             
   security_groups = [aws_security_group.vishalk_sg.name]
 
   tags = {
@@ -117,9 +114,8 @@ resource "aws_instance" "vishalk_node" {
   }
 }
 
-# -----------------------
-# Output Public IPs
-# -----------------------
+
+# Output IPs
 output "jenkins_master_ip" {
   value = aws_instance.vishalk_master.public_ip
 }
