@@ -135,6 +135,15 @@ I created a single Terraform file (main.tf) to provision my AWS infrastructure. 
 
 
 
+provider "aws" {
+  region     = var.aws_region
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+}
 
+# Variables
+variable "aws_access_key" {}
+variable "aws_secret_key" {}
+variable "aws_region" {}
 
 
